@@ -1,10 +1,18 @@
 [
   {
     "cvId": 1,
-    "template": 1,
-    "font": "default",
-    "fontsize": "default",
-    "color": "default",
+    "preferences": {
+      "template": 1,
+      "font": "default",
+      "fontsize": "default",
+      "color": "default"
+    },
+    "firstname": "Jon",
+    "lastname": "Snow",
+    "email": "winterfell@gmail.com",
+    "tel": "+123-456-7890",
+    "address": "near the wall",
+    "about": "Jon Snow is introduced as the 14-year-old illegitimate son of Eddard Ned Stark, Lord of Winterfell",
     "subtitle": "king of the north",
     "education": [
       {
