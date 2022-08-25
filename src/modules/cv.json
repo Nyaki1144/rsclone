@@ -1,0 +1,50 @@
+[
+  {
+    "cvId": 1,
+    "template": 1,
+    "font": "default",
+    "fontsize": "default",
+    "color": "default",
+    "subtitle": "king of the north",
+    "education": [
+      {
+        "title": "System technologies",
+        "school": "University of North Lands",
+        "location": "North Lands",
+        "begin": "Jun 2010",
+        "end": "Jul 2015",
+        "description": "to add some description"
+      }
+    ],
+    "employment": [
+      {
+        "position": "Engineer",
+        "employer": "Great wall inc",
+        "location": "Westeros",
+        "begin": "Aug 2015",
+        "end": "Present",
+        "description": "some job responsibilities here"
+      }
+    ],
+    "skills": [
+      {
+        "skill": "HTML",
+        "level": 4
+      },
+      {
+        "skill": "JS",
+        "level": 3
+      }
+    ],
+    "languages": [
+      {
+        "language": "english",
+        "level": 4
+      },
+      {
+        "language": "russian",
+        "level": 5
+      }
+    ]
+  }
+]

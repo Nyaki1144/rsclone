@@ -1,0 +1,22 @@
+[
+  {
+    "userId": 1,
+    "cvlist": [1],
+    "firstname": "Jon",
+    "lastname": "Snow",
+    "email": "winterfell@gmail.com",
+    "tel": "+123-456-7890",
+    "address": "near the wall",
+    "about": "Jon Snow is introduced as the 14-year-old illegitimate son of Eddard Ned Stark, Lord of Winterfell"
+  },
+  {
+    "userId": 2,
+    "cvlist": [],
+    "firstname": "Ichigo",
+    "lastname": "Kurasaki",
+    "email": "shinigami@gmail.com",
+    "tel": "+987-654-3210",
+    "address": "Japan",
+    "about": "Ichigo is one of the teenagers attending Karakura High School and having the ability to see ghosts"
+  }
+]
