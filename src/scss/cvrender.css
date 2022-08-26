@@ -1,0 +1,68 @@
+.canvas-container {
+  width: auto;
+  height: 90vh;
+  aspect-ratio: 1 / 1.41;
+  padding: 0;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.dropdown-item:hover,
+.color-option:hover,
+.template-thumb:hover {
+  cursor: pointer;
+}
+
+.colorpicker:hover {
+  cursor: crosshair;
+}
+
+.color-option:hover,
+.template-thumb:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+
+.color-option,
+.colorpicker {
+  width: 2rem;
+  height: 2rem;
+  transition: 0.5s;
+}
+
+.color-1 {
+  background-color: #2f71a1;
+}
+
+.color-2 {
+  background-color: #6fab8a;
+}
+
+.color-3 {
+  background-color: #303745;
+}
+
+.color-4 {
+  background-color: #828282;
+}
+
+.color-5 {
+  background-color: #b59c94;
+}
+
+.colorpicker{
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.template-thumb {
+  width: 4rem;
+  height: calc( 4 * 1.41rem);
+  background-color: #828282;
+  transition: 0.5s;
+}
