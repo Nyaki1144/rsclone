@@ -83,7 +83,14 @@ const baseConfig = {
       template: path.resolve(__dirname, "./src/settings.html"),
       filename: "settings.html",
     }),
-
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./src/cv-main-page.html"),
+      filename: "cv-main-page.html",
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./src/letter-main-page.html"),
+      filename: "letter-main-page.html",
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "style.css",
