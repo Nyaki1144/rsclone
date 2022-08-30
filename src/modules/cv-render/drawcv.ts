@@ -1,5 +1,5 @@
 import { cvPreferences } from "./settingshandlers";
-import email from "../../assets/icons/email.svg"
+import { templates } from "./templates";
 
 const cnvcontainer = document.querySelector('.canvas-container')
 const cnv = document.querySelector('#cv-page') as HTMLCanvasElement;
@@ -11,22 +11,8 @@ let newLinePosY = 0;
 let newElPosX = 0;
 let padding = 15;
 
-const headerSettings = {
-  titlesize: 40,
-  subtitlesize: 20,
-  titlefont: (!cvPreferences || cvPreferences.font === 'default') ? 'Times New Roman' : cvPreferences.font,
-  titlecolor: 'white',
-  subtitlefont: 'Times New Roman',
-  subtitlecolor: '#d3d3d3',
-}
-
-const mainSettings = {
-  textsize: 14,
-  headersize: 20,
-  font: 'Times New Roman',
-  textcolor: 'black',
-  headercolor: '#47566B',
-}
+let headerSettings = {...templates[0].headerSettings};
+let mainSettings = {...templates[0].mainSettings};
 
 /*
 const emailImg = loadImage('./assets/icons/email.svg');
@@ -59,21 +45,11 @@ function drawText(fontSize: number, font: string, color: string, text: string, x
 }
 
 function drawVerticalSeparator(x: number, y: number) {
-  ctx.strokeStyle = '#000';
-  ctx.lineWidth = 1;
-  ctx.moveTo(x, y);
-  ctx.lineTo(x, cnv.height - padding);
-  ctx.stroke();
-  newElPosX += padding;
+  drawRect(mainSettings.headercolor, 'transparent', x + 0.5, y, 1, cnv.height - padding);
 };
 
-function drawHorizontalSeparator(x: number, y: number, end?: number) {
-  console.log('separator');
-  ctx.strokeStyle = '#000';
-  ctx.lineWidth = 1;
-  ctx.moveTo(x, y);
-  ctx.lineTo( end? end : cnv.width - padding, y);
-  ctx.stroke();
+function drawHorizontalSeparator(x: number, y: number, width?: number, color?: string) {
+  drawRect(color? color : mainSettings.headercolor, 'transparent', x, y + 0.5, width? width : cnv.width - x - padding, 1);
   newLinePosY += padding;
 }
 
@@ -121,7 +97,6 @@ function drawHeaderContacts(email: string, phone: string, location: string){
   drawText(mainSettings.textsize, mainSettings.font, headerSettings.subtitlecolor , location, newElPosX, newLinePosY);
   length = ctx.measureText(location).width;
   newElPosX += length + padding;
-
   newLinePosY += 14 + padding;
   newElPosX = padding * 2 + 150; 
 }
@@ -131,7 +106,7 @@ function drawCVHeader() {
   drawUserpic();
   drawTitle('John Doe');
   drawSubtitle('programmer');
-  drawHorizontalSeparator(newElPosX, newLinePosY + 0.5);
+  drawHorizontalSeparator(newElPosX, newLinePosY + 0.5, undefined, headerSettings.subtitlecolor);
   drawHeaderContacts('ex@gmafjs.com', '123812', 'Vilnius')
 }
 
@@ -140,7 +115,7 @@ function drawEducationSection(dates: string, title: string, location: string, de
   newElPosX += 200;
   drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, dates, newElPosX, newLinePosY);
   newLinePosY += mainSettings.textsize;
-  newElPosX = padding;
+  newElPosX = mainSettings.sidebar === 'left' ? 170 : padding;
   drawText(mainSettings.textsize, mainSettings.font, 'grey', location, newElPosX, newLinePosY);
   newLinePosY += mainSettings.textsize + padding;
   drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, description, newElPosX, newLinePosY);
@@ -148,14 +123,14 @@ function drawEducationSection(dates: string, title: string, location: string, de
 }
 
 function drawCVBody() {
+  newElPosX = mainSettings.sidebar === 'left' ? 170 : padding;
   newLinePosY = 150 + (padding * 3);
-  newElPosX = padding;
   drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Education', newElPosX, newLinePosY);
   newLinePosY += mainSettings.headersize + padding;
   drawEducationSection('Sep 2022 - Present', 'Title', 'Minsk, BLR', 'Some description');
   drawEducationSection('May 2020 - Sep 2022', 'Title 2', 'Vilnius, LTU', 'Some description to add here');
   newLinePosY += padding;
-  // drawHorizontalSeparator (padding, newLinePosY + 0.5, 340);
+  drawHorizontalSeparator (mainSettings.sidebar === 'left'? newElPosX : padding, newLinePosY + 0.5, 340);
   drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Work', newElPosX, newLinePosY);
   newLinePosY += mainSettings.headersize + padding;
   drawEducationSection('Oct 2019 - Present', 'Work', 'Oslo', 'Some description again');
@@ -163,9 +138,8 @@ function drawCVBody() {
 }
 
 function drawCVSidebar() {
-  console.log('sidebar');
+  newElPosX = mainSettings.sidebar === 'left' ? padding : 400 + padding;
   newLinePosY = 150 + padding * 3;
-  newElPosX = 400 + padding;
   drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Skills', newElPosX, newLinePosY);
   newLinePosY += mainSettings.headersize + padding;
   drawSkill('HTML', 3);
@@ -180,20 +154,25 @@ function drawCVSidebar() {
 export function drawCV() {
   drawCVHeader();
   drawCVBody();
-  drawVerticalSeparator(394.5, 150 + (padding * 3));
+  drawVerticalSeparator(mainSettings.sidebar === 'left' ? 170.5 - padding : 394.5, cnv.height - newLinePosY);
   drawCVSidebar();
 }
 
 function drawSkill(skill: string, level: number) {
   drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, skill, newElPosX, newLinePosY);
   newLinePosY += mainSettings.textsize + padding/2;
-  for (let i = 1; i <= 5; i++)
-  {
-    drawRect(i <= level? 'black': 'transparent', 'black', newElPosX, newLinePosY, 5, 5);
-    newElPosX += 10;
+  if (mainSettings.template === 1){
+    for (let i = 1; i <= 5; i++)
+    {
+      drawRect(i <= level? 'black': 'transparent', 'black', newElPosX, newLinePosY, 5, 5);
+      newElPosX += 10;
+    }
+  } else {
+    drawRect('transparent', mainSettings.headercolor, newElPosX, newLinePosY, 75, 5);
+    drawRect(mainSettings.headercolor, 'transparent', newElPosX, newLinePosY, level*15, 5);
   }
   newLinePosY += padding;
-  newElPosX = 400 + padding;
+  newElPosX = mainSettings.sidebar === 'left' ? padding : 400 + padding;
 }
 
 function loadImage(src: string) {
@@ -222,6 +201,12 @@ export function refreshCV() {
     if(cvPreferences.size === 'm') mainSettings.textsize = 14;
     if(cvPreferences.size === 'l') mainSettings.textsize = 16;
   }
+  if (cvPreferences.template && cvPreferences.template !== mainSettings.template) {
+    mainSettings.template = cvPreferences.template;
+    headerSettings = {...templates[cvPreferences.template - 1].headerSettings};
+    mainSettings = {...templates[cvPreferences.template - 1].mainSettings};
+  }
   clearCanvas();
   drawCV();
+
 }
