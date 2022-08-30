@@ -1,9 +1,12 @@
-const cvPreferences = {
-  'template': 1,
-  'font': 'default',
-  'color': 'default',
-  'size': 'default'
+import { refreshCV } from "./drawcv";
+
+export const cvPreferences = {
+  template: 1,
+  font: 'default',
+  color: 'default',
+  size: 'default'
 }
+
 const templateThumbs = document.querySelectorAll('.template-thumb');
 const dropdownOptions = document.querySelectorAll('.dropdown-item');
 const selectedColor = document.querySelector('.selected-color');
@@ -15,8 +18,9 @@ const colorpicker = document.querySelector('.colorpicker');
 export function initSettingBtns() {
   templateThumbs.forEach(template => template.addEventListener('click', setSetting));
   dropdownOptions.forEach(font => font.addEventListener('click', setSetting));
+  colorPresets.forEach(color => color.addEventListener('mouseover', setColor));
   colorPresets.forEach(color => color.addEventListener('click', setColor));
-  colorpicker?.addEventListener('input', setColor)
+  colorpicker?.addEventListener('input', setColor);
 }
 
 function setSetting(e: Event) {
@@ -29,8 +33,7 @@ function setSetting(e: Event) {
   if ((e.target as HTMLElement).dataset.cvSize) {
     cvPreferences.size = (e.target as HTMLElement).dataset.cvSize || 'default';
   }
-
-  console.log(cvPreferences);
+  refreshCV();
 }
 
 function setColor(e: Event) {
@@ -42,5 +45,5 @@ function setColor(e: Event) {
   }
   (selectedColor as HTMLElement).textContent = color || '';
   cvPreferences.color = color || 'default';
-  console.log(cvPreferences);
+  refreshCV();
 }
