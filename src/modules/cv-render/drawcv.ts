@@ -1,212 +1,236 @@
-import { cvPreferences } from "./settingshandlers";
+import { currentCVData } from "./cvdata";
 import { templates } from "./templates";
 
-const cnvcontainer = document.querySelector('.canvas-container')
-const cnv = document.querySelector('#cv-page') as HTMLCanvasElement;
-const ctx = cnv.getContext('2d') as CanvasRenderingContext2D;
 //const ratio = window.devicePixelRatio || 1;
-cnv.width = cnvcontainer?.clientWidth || 0;
-cnv.height = cnvcontainer?.clientHeight || 0;
 let newLinePosY = 0;
 let newElPosX = 0;
 let padding = 15;
 
-let headerSettings = {...templates[0].headerSettings};
-let mainSettings = {...templates[0].mainSettings};
+let currentCV: Record<string, any>;
 
-/*
-const emailImg = loadImage('./assets/icons/email.svg');
-const addressImg = loadImage('./assets/icons/address.svg');
-const phoneImg = loadImage('./assets/icons/phone.svg');
-const userpicImg = loadImage('./assets/icons/email.svg');
-*/
-
-function drawRect(fillColor: string, strokeColor: string, x: number, y: number , w: number, h: number) {
-  if (strokeColor) {
-    ctx.strokeStyle = strokeColor;
-    ctx.strokeRect(x, y, w, h);
-  }
-  if (fillColor) {
-    ctx.fillStyle = fillColor;
-    ctx.fillRect(x, y, w, h);
-  }
+export function drawCV(data: Record<string, any>, container: HTMLElement) {
+  newLinePosY = 0;
+  newElPosX = 0;
+  createCanvas();
+  currentCV.utils = drawUtils(currentCV.cnv, currentCV.ctx);
+  container.appendChild(currentCV.cnv);
+  currentCV.settings = Object.assign({}, templates[data.preferences.template || 0].settings);
+  setPreferences();
+  renderCV(data);
 }
 
-function drawImage(img: HTMLImageElement, x: number, y: number, w: number, h: number) {
-  ctx.drawImage(img, x, y, w, h);
+function createCanvas(){
+  currentCV = {};
+  const cnv = document.createElement('canvas') as HTMLCanvasElement;
+  cnv.classList.add('border');
+  const ctx = cnv.getContext('2d') as CanvasRenderingContext2D;
+  cnv.width = 620;
+  cnv.height = 877;
+  currentCV.cnv = cnv;
+  currentCV.ctx = ctx;
 }
 
-function drawText(fontSize: number, font: string, color: string, text: string, x: number, y: number) {
-  y = y + Number(fontSize);
-  const fontSetting = `${fontSize}px ${font}`;
-  ctx.fillStyle = color;
-  ctx.font = fontSetting;
-  ctx.fillText(text, x, y);
+function renderCV(cv: Record<string, any>){
+  drawHeaderBackground();
+  drawUserpic();
+  drawTitle(`${cv.firstname} ${cv.lastname}`);
+  drawSubtitle(`${cv.subtitle}`);
+  drawHorizontalSeparator(newElPosX, newLinePosY + 0.5, undefined, String(currentCV.settings.subtitlecolor));
+  drawHeaderContacts(cv.email, cv.tel, cv.address);
+  drawVerticalSeparator(currentCV.settings.sidebar === 'left' ? 170.5 - padding : 394.5, newLinePosY + padding*2 );
+  drawCVBody(cv);
+  drawCVSidebar(cv);
+};
+
+function drawHeaderBackground() {
+  currentCV.utils.drawRect(currentCV.settings.background, 'transparent', 0, 0, currentCV.cnv.width, 150 + padding * 2);
 }
 
 function drawVerticalSeparator(x: number, y: number) {
-  drawRect(mainSettings.headercolor, 'transparent', x + 0.5, y, 1, cnv.height - padding);
-};
-
-function drawHorizontalSeparator(x: number, y: number, width?: number, color?: string) {
-  drawRect(color? color : mainSettings.headercolor, 'transparent', x, y + 0.5, width? width : cnv.width - x - padding, 1);
-  newLinePosY += padding;
+  currentCV.utils.drawRect(String(currentCV.settings.headercolor), 'transparent', x + 0.5, y, 1, currentCV.cnv.height - y - padding);
 }
 
-function drawBgRect() {
-  drawRect(mainSettings.headercolor, 'transparent', 0, 0, cnv.width, 150 + padding * 2);
+function drawHorizontalSeparator(x: number, y: number, width?: number, color?: string) {
+  currentCV.utils.drawRect(color? color : currentCV.settings.headercolor, 'transparent', x, y + 0.5, width? width : currentCV.cnv.width - x - padding, 1);
+  newLinePosY += padding;
 }
 
 function drawUserpic() {
   let x = 0 + padding;
   let y = 0 + padding;
-  drawRect('#000', 'transparent', x, y, 150, 150);
-  // drawImage(userpicImg, x, y, 150, 150);
+  currentCV.utils.drawRect('#000', 'transparent', x, y, 150, 150);
+  // TODO draw image
   newElPosX = x + padding + 150;
 }
 
 function drawTitle(text: string) {
   const x = newElPosX;
   const y = padding;
-  drawText(headerSettings.titlesize, headerSettings.titlefont, headerSettings.titlecolor, text, x, y);
-  newLinePosY += headerSettings.titlesize + padding;
+  currentCV.utils.drawText(Number(currentCV.settings.titlesize), String(currentCV.settings.titlefont), String(currentCV.settings.titlecolor), text, x, y);
+  newLinePosY += currentCV.settings.titlesize + padding;
 }
 
 function drawSubtitle(text: string) {
   const x = newElPosX;
   const y = newLinePosY;
-  drawText(headerSettings.subtitlesize, headerSettings.subtitlefont, headerSettings.subtitlecolor, text, x, y);
-  newLinePosY += headerSettings.subtitlesize + padding;
+  currentCV.utils.drawText(currentCV.settings.subtitlesize, currentCV.settings.subtitlefont, currentCV.settings.subtitlecolor, text, x, y);
+  newLinePosY += currentCV.settings.subtitlesize + padding;
 }
 
 function drawHeaderContacts(email: string, phone: string, location: string){
+  // TODO add icons
   // drawImage(emailImg, 0, 0, 14, 14);
-  newElPosX += 14;
-  drawText(mainSettings.textsize, mainSettings.font, headerSettings.subtitlecolor , email, newElPosX, newLinePosY);
-  let length = ctx.measureText(email).width;
-  newElPosX += length + padding;
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.subtitlecolor , email, newElPosX, newLinePosY);
+  let length = currentCV.ctx.measureText(email).width;
+  newLinePosY += 14 + padding/2;
 
   //drawImage(phoneImg, newElPosX, newLinePosY, 14, 14);
-  newElPosX += 14;
-  drawText(mainSettings.textsize, mainSettings.font, headerSettings.subtitlecolor , phone, newElPosX, newLinePosY);
-  length = ctx.measureText(phone).width;
-  newElPosX += length + padding;
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.subtitlecolor , phone, newElPosX, newLinePosY);
+  length = currentCV.ctx.measureText(phone).width;
+  newLinePosY += 14 + padding/2;
 
   //drawImage(addressImg, newElPosX, newLinePosY, 14, 14);
-  newElPosX += 14;
-  drawText(mainSettings.textsize, mainSettings.font, headerSettings.subtitlecolor , location, newElPosX, newLinePosY);
-  length = ctx.measureText(location).width;
-  newElPosX += length + padding;
-  newLinePosY += 14 + padding;
-  newElPosX = padding * 2 + 150; 
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.subtitlecolor , location, newElPosX, newLinePosY);
+  length = currentCV.ctx.measureText(location).width;
+  newLinePosY += 14 + padding/2;
 }
 
-function drawCVHeader() {
-  drawBgRect();
-  drawUserpic();
-  drawTitle('John Doe');
-  drawSubtitle('programmer');
-  drawHorizontalSeparator(newElPosX, newLinePosY + 0.5, undefined, headerSettings.subtitlecolor);
-  drawHeaderContacts('ex@gmafjs.com', '123812', 'Vilnius')
-}
-
-function drawEducationSection(dates: string, title: string, location: string, description: string) {
-  drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, title, newElPosX, newLinePosY);
-  newElPosX += 200;
-  drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, dates, newElPosX, newLinePosY);
-  newLinePosY += mainSettings.textsize;
-  newElPosX = mainSettings.sidebar === 'left' ? 170 : padding;
-  drawText(mainSettings.textsize, mainSettings.font, 'grey', location, newElPosX, newLinePosY);
-  newLinePosY += mainSettings.textsize + padding;
-  drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, description, newElPosX, newLinePosY);
-  newLinePosY += mainSettings.textsize + padding;
-}
-
-function drawCVBody() {
-  newElPosX = mainSettings.sidebar === 'left' ? 170 : padding;
+function drawCVBody(cv: Record<string, any>) {
+  newElPosX = currentCV.settings.sidebar === 'left' ? 170 : padding;
   newLinePosY = 150 + (padding * 3);
-  drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Education', newElPosX, newLinePosY);
-  newLinePosY += mainSettings.headersize + padding;
-  drawEducationSection('Sep 2022 - Present', 'Title', 'Minsk, BLR', 'Some description');
-  drawEducationSection('May 2020 - Sep 2022', 'Title 2', 'Vilnius, LTU', 'Some description to add here');
+  currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.textfont, currentCV.settings.headercolor, 'Education', newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.headersize + padding;
+  const educationData = cv.education;
+  for(const entry of educationData){
+    drawBodySection(
+      `${entry.begin} - ${entry.end}`,
+      entry.title,
+      `${entry.school}, ${entry.location}`,
+      entry.description);
+  }
   newLinePosY += padding;
-  drawHorizontalSeparator (mainSettings.sidebar === 'left'? newElPosX : padding, newLinePosY + 0.5, 340);
-  drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Work', newElPosX, newLinePosY);
-  newLinePosY += mainSettings.headersize + padding;
-  drawEducationSection('Oct 2019 - Present', 'Work', 'Oslo', 'Some description again');
-  drawEducationSection('Jan 2015 - Oct 2015', 'Work again', 'Company, LTU', 'Some description to add here again and again');
+  drawHorizontalSeparator (currentCV.settings.sidebar === 'left'? newElPosX : padding, newLinePosY + 0.5, 340);
+  currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Work', newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.headersize + padding;
+  const employmentData = cv.employment;
+  for(const entry of employmentData){
+    drawBodySection(
+      `${entry.begin} - ${entry.end}`,
+      entry.position,
+      `${entry.employer}, ${entry.location}`,
+      entry.description);
+  }
 }
 
-function drawCVSidebar() {
-  newElPosX = mainSettings.sidebar === 'left' ? padding : 400 + padding;
+function drawBodySection(dates: string, title: string, location: string, description: string) {
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, title, newElPosX, newLinePosY);
+  newElPosX += 200;
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, dates, newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.textsize;
+  newElPosX = currentCV.settings.sidebar === 'left' ? 170 : padding;
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, 'grey', location, newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.textsize + padding;
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, description, newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.textsize + padding;
+}
+
+function drawCVSidebar(cv: Record<string, any>) {
+  newElPosX = currentCV.settings.sidebar === 'left' ? padding : 400 + padding;
   newLinePosY = 150 + padding * 3;
-  drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Skills', newElPosX, newLinePosY);
-  newLinePosY += mainSettings.headersize + padding;
-  drawSkill('HTML', 3);
-  drawSkill('JS', 4);
+  currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Skills', newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.headersize + padding;
+  const skills = cv.skills;
+  for(const entry of skills){
+    drawSkill(entry.skill, entry.level);
+  }
   newLinePosY+= padding;
-  drawText(mainSettings.headersize, mainSettings.font, mainSettings.headercolor, 'Languages', newElPosX, newLinePosY);
-  newLinePosY += mainSettings.headersize + padding;
-  drawSkill('English', 5);
-  drawSkill('Chinese', 3);
-}
-
-export function drawCV() {
-  drawCVHeader();
-  drawCVBody();
-  drawVerticalSeparator(mainSettings.sidebar === 'left' ? 170.5 - padding : 394.5, cnv.height - newLinePosY);
-  drawCVSidebar();
+  currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Languages', newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.headersize + padding;
+  const languages = cv.languages;
+  for(const entry of languages){
+    drawSkill(entry.language, entry.level);
+  }
 }
 
 function drawSkill(skill: string, level: number) {
-  drawText(mainSettings.textsize, mainSettings.font, mainSettings.textcolor, skill, newElPosX, newLinePosY);
-  newLinePosY += mainSettings.textsize + padding/2;
-  if (mainSettings.template === 1){
+  currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, skill, newElPosX, newLinePosY);
+  newLinePosY += currentCV.settings.textsize + padding/2;
+  if (currentCV.settings.template === 0){
     for (let i = 1; i <= 5; i++)
     {
-      drawRect(i <= level? 'black': 'transparent', 'black', newElPosX, newLinePosY, 5, 5);
+      currentCV.utils.drawRect(i <= level? currentCV.settings.headercolor: 'transparent', 'black', newElPosX, newLinePosY, 5, 5);
       newElPosX += 10;
     }
   } else {
-    drawRect('transparent', mainSettings.headercolor, newElPosX, newLinePosY, 75, 5);
-    drawRect(mainSettings.headercolor, 'transparent', newElPosX, newLinePosY, level*15, 5);
+    currentCV.utils.drawRect('transparent', currentCV.settings.headercolor, newElPosX, newLinePosY, 75, 5);
+    currentCV.utils.drawRect(currentCV.settings.headercolor, 'transparent', newElPosX, newLinePosY, level*15, 5);
   }
   newLinePosY += padding;
-  newElPosX = mainSettings.sidebar === 'left' ? padding : 400 + padding;
-}
-
-function loadImage(src: string) {
-  const img = new Image();
-  img.src = src;
-  return img;
-}
-
- function clearCanvas(){
-  ctx.clearRect(0, 0, cnv.width, cnv.height);
-  newLinePosY = 0;
-  newElPosX = 0;
+  newElPosX = currentCV.settings.sidebar === 'left' ? padding : 400 + padding;
 }
 
 export function refreshCV() {
-  if (cvPreferences.font && cvPreferences.font !== 'default') {
-    headerSettings.titlefont = cvPreferences.font;
-    headerSettings.subtitlefont = cvPreferences.font;
-    mainSettings.font = cvPreferences.font;
-  }
-  if (cvPreferences.color && cvPreferences.color !== 'default') {
-    mainSettings.headercolor = cvPreferences.color;
-  }
-  if (cvPreferences.size && cvPreferences.size !== 'default') {
-    if(cvPreferences.size === 's') {mainSettings.textsize = 10};
-    if(cvPreferences.size === 'm') mainSettings.textsize = 14;
-    if(cvPreferences.size === 'l') mainSettings.textsize = 16;
-  }
-  if (cvPreferences.template && cvPreferences.template !== mainSettings.template) {
-    mainSettings.template = cvPreferences.template;
-    headerSettings = {...templates[cvPreferences.template - 1].headerSettings};
-    mainSettings = {...templates[cvPreferences.template - 1].mainSettings};
-  }
-  clearCanvas();
-  drawCV();
+  currentCV.utils.clearCanvas();
+  setPreferences();
+  renderCV(currentCVData);
+}
 
+function setPreferences(){
+
+  if (currentCVData.preferences.font && currentCVData.preferences.font !== 'default') {
+    currentCV.settings.titlefont = currentCVData.preferences.font;
+    currentCV.settings.subtitlefont = currentCVData.preferences.font;
+    currentCV.settings.textfont = currentCVData.preferences.font;
+    currentCV.settings.headerfont = currentCVData.preferences.font;
+  }
+  if (currentCVData.preferences.color && currentCVData.preferences.color !== 'default') {
+    currentCV.settings.headercolor = currentCVData.preferences.color;
+    currentCV.settings.background = currentCVData.preferences.color;
+  }
+  if (currentCVData.preferences.fontsize && currentCVData.preferences.fontsize !== 'default') {
+    if(currentCVData.preferences.fontsize === 's') currentCV.settings.textsize = 10;
+    if(currentCVData.preferences.fontsize === 'm') currentCV.settings.textsize = 14;
+    if(currentCVData.preferences.fontsize === 'l') currentCV.settings.textsize = 16;
+  }
+  if (currentCVData.preferences.template >= 0) {
+    currentCV.settings.template = currentCVData.preferences.template;
+    console.log('template', currentCV.settings.template);
+  }
+}
+
+export function resetSettings(){
+  currentCV.settings = Object.assign({}, templates[currentCVData.preferences.template].settings);
+}
+
+function drawUtils(cnv: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  return {
+    drawRect(fillColor: string, strokeColor: string, x: number, y: number , w: number, h: number): void {
+      if (strokeColor) {
+        ctx.strokeStyle = strokeColor;
+        ctx.strokeRect(x, y, w, h);
+      }
+      if (fillColor) {
+        ctx.fillStyle = fillColor;
+        ctx.fillRect(x, y, w, h);
+      }
+    },
+
+    drawImage(img: HTMLImageElement, x: number, y: number, w: number, h: number) {
+      ctx.drawImage(img, x, y, w, h);
+    },
+
+    drawText(fontSize: number, font: string, color: string, text: string, x: number, y: number) {
+      y = y + Number(fontSize);
+      const fontSetting = `${fontSize}px ${font}`;
+      ctx.fillStyle = color;
+      ctx.font = fontSetting;
+      ctx.fillText(text, x, y);
+    },
+
+    clearCanvas(){
+      ctx.clearRect(0, 0, cnv.width, cnv.height);
+      newLinePosY = 0;
+      newElPosX = 0;
+    }
+  }
 }

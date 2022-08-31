@@ -1,42 +1,38 @@
-import { cvPreferences } from "./settingshandlers";
-
 export const templates = [
-  {
-    headerSettings: {
+  { settings: {
+      template: 0,
       titlesize: 40,
       subtitlesize: 20,
-      titlefont: (!cvPreferences || cvPreferences.font === 'default') ? 'Times New Roman' : cvPreferences.font,
-      titlecolor: 'white',
+      headersize: 20,
+      textsize: 14,
+      sidebar: 'right',
+      background: '#47566B',
+      titlefont: 'Times New Roman',
+      titlecolor: '#fff',
       subtitlefont: 'Times New Roman',
       subtitlecolor: '#d3d3d3',
-    },
-    mainSettings: {
-      template: 1,
-      sidebar: 'right',
-      textsize: 14,
-      headersize: 20,
-      font: 'Times New Roman',
-      textcolor: 'black',
+      headerfont: 'Times New Roman',
       headercolor: '#47566B',
+      textfont: 'Times New Roman',
+      textcolor: 'black',
     }
   },
-  {
-    headerSettings: {
+  { settings: {
+      template: 1,
       titlesize: 35,
       subtitlesize: 18,
-      titlefont: (!cvPreferences || cvPreferences.font === 'default') ? 'Verdana' : cvPreferences.font,
+      headersize: 20,
+      textsize: 14,
+      sidebar: 'left',
+      background:'#d3d3d3',
+      titlefont: 'Verdana',
       titlecolor: '#000',
       subtitlefont: 'Verdana',
-      subtitlecolor: 'grey',
-    },
-    mainSettings: {
-      template: 2,
-      sidebar: 'left',
-      textsize: 14,
-      headersize: 20,
-      font: 'Verdana',
-      textcolor: 'grey',
-      headercolor: '#d3d3d3',
+      subtitlecolor: '#383838',
+      headerfont: 'Verdana',
+      headercolor: '#000',
+      textfont: 'Verdana',
+      textcolor: 'black',
     }
   }
 ]
