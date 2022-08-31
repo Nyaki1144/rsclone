@@ -1,11 +1,5 @@
-import { refreshCV } from "./drawcv";
-
-export const cvPreferences = {
-  template: 1,
-  font: 'default',
-  color: 'default',
-  size: 'default'
-}
+import { currentCVData } from "./cvdata";
+import { refreshCV, resetSettings } from "./drawcv";
 
 const templateThumbs = document.querySelectorAll('.template-thumb');
 const dropdownOptions = document.querySelectorAll('.dropdown-item');
@@ -23,20 +17,24 @@ export function initSettingBtns() {
   colorpicker?.addEventListener('input', setColor);
 }
 
-function setSetting(e: Event) {
+function setSetting(e: Event): void {
   if ((e.target as HTMLElement).dataset.cvTemplate) {
-    cvPreferences.template = Number((e.target as HTMLElement).dataset.cvTemplate);
+    currentCVData.preferences.template = Number((e.target as HTMLElement).dataset.cvTemplate);
+    currentCVData.preferences.color = 'default';
+    currentCVData.preferences.font = 'default';
+    currentCVData.preferences.fontsize = 'default';
+    resetSettings();
   }
   if ((e.target as HTMLElement).dataset.cvFont) {
-    cvPreferences.font = (e.target as HTMLElement).dataset.cvFont || 'default';
+    currentCVData.preferences.font = (e.target as HTMLElement).dataset.cvFont || 'default';
   }
   if ((e.target as HTMLElement).dataset.cvSize) {
-    cvPreferences.size = (e.target as HTMLElement).dataset.cvSize || 'default';
+    currentCVData.preferences.fontsize = (e.target as HTMLElement).dataset.cvSize || 'default';
   }
   refreshCV();
 }
 
-function setColor(e: Event) {
+function setColor(e: Event): void {
   let color;
   if ((e.target as HTMLElement).dataset.cvColor){
     color = (e.target as HTMLElement).dataset.cvColor;
@@ -44,6 +42,6 @@ function setColor(e: Event) {
     color = (e.target as HTMLInputElement).value;
   }
   (selectedColor as HTMLElement).textContent = color || '';
-  cvPreferences.color = color || 'default';
+  currentCVData.preferences.color = color || 'default';
   refreshCV();
 }
