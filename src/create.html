@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../src/create.css">
     <title>create</title>
   </head>
-  <body>
+  <body data-page="cv-create">
     <header>
       <div class="px-3 py-2 text-bg-dark">
         <div class="container">
@@ -151,7 +150,6 @@
         <div class="col container border vh-100 m-1">
           <div class="row justify-content-center">
             <div class="col col-md-8 canvas-container">
-              <canvas id="cv-page" class="border" width="1000" height="1410"></canvas>
             </div>
           </div>
           <div class="row border p-2">
@@ -162,8 +160,8 @@
                 </button>
                 <ul class="dropdown-menu">
                   <div class="container d-flex justify-content-around">
+                    <div class="template-thumb" data-cv-template="0"></div>
                     <div class="template-thumb" data-cv-template="1"></div>
-                    <div class="template-thumb" data-cv-template="2"></div>
                   </div>
                 </ul>
               </div>
