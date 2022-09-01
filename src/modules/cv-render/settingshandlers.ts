@@ -2,7 +2,7 @@ import { currentCVData } from "./cvdata";
 import { refreshCV, resetSettings } from "./drawcv";
 
 const templateThumbs = document.querySelectorAll('.template-thumb');
-const dropdownOptions = document.querySelectorAll('.dropdown-item');
+const dropdownOptions = document.querySelectorAll('.dropdown-item:not(.download-option)');
 const selectedColor = document.querySelector('.selected-color');
 
 const colorPresets = document.querySelectorAll('.color-option');

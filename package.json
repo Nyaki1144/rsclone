@@ -51,6 +51,7 @@
     "webpack-merge": "5.8.0"
   },
   "dependencies": {
-    "bootstrap": "^5.2.0"
+    "bootstrap": "^5.2.0",
+    "jspdf": "^2.5.1"
   }
 }
