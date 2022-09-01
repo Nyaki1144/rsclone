@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RSclone</title>
   </head>
-  <body data-page="index">
+  <body data-page="index" class="bg-color text-color">
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
       <symbol
         id="cv"
@@ -46,17 +46,31 @@
 
     <main class="d-flex" style="height: 100vh">
       <div
-        class="d-flex flex-column w-25 h-100 flex-shrink-0 p-3 text-white bg-dark"
+        class="d-flex flex-column h-100 flex-shrink-0 p-3 text-white bg-dark"
+        style="width: 250px"
       >
-        <a
-          href="/"
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-        >
-          <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#cv" />
-          </svg>
-          <span class="fs-4">Your CV</span>
-        </a>
+        <div class="d-flex">
+          <a
+            href="/"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#cv" />
+            </svg>
+            <span class="fs-4">Your CV</span>
+          </a>
+          <div class="theme" data-icon="sun">
+            <svg class="icon icon-theme">
+              <use xlink:href="./assets/icons/sun.svg#sun"></use>
+            </svg>
+          </div>
+          <div class="theme hidden" data-icon="moon">
+            <svg class="icon icon-theme">
+              <use xlink:href="./assets/icons/moon.svg#moon"></use>
+            </svg>
+          </div>
+        </div>
+
         <hr />
         <ul class="nav nav-pills h-100 flex-column mb-auto">
           <li class="nav-item">
@@ -105,7 +119,7 @@
         </div>
       </div>
 
-      <div class="b-example-divider d-flex flex-wrap">
+      <div class="d-flex flex-wrap bg-color">
         <div class="p-5" style="height: 450px">
           <div class="d-flex flex-column">
             <h1>Резюме</h1>

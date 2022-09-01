@@ -1,0 +1,23 @@
+:root {
+  --background-color-sun: #ffffff;
+  --font-color-sun: #212529;
+
+  --background-color-moon: #212529;
+  --font-color-moon: #ffffe3;
+
+  --background-color: var(--background-color-sun);
+  --font-color: var(--font-color-sun);
+}
+
+.bg-color {
+  background-color: var(--background-color);
+}
+
+.text-color {
+  color: var(--font-color);
+}
+
+.icon-theme {
+  width: 50px;
+  height: 50px;
+}

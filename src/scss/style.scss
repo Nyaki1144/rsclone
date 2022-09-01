@@ -1,3 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./cvrender";
 @import "./home";
+@import "./theme";
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
