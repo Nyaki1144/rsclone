@@ -13,6 +13,7 @@ export function drawCV(data: Record<string, any>, container: HTMLElement) {
   newElPosX = 0;
   createCanvas();
   currentCV.utils = drawUtils(currentCV.cnv, currentCV.ctx);
+  currentCV.utils.drawRect('#fff','#fff', 0, 0, currentCV.cnv.width, currentCV.cnv.height);
   container.appendChild(currentCV.cnv);
   currentCV.settings = Object.assign({}, templates[data.preferences.template || 0].settings);
   setPreferences();
@@ -231,6 +232,7 @@ function drawUtils(cnv: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
       ctx.clearRect(0, 0, cnv.width, cnv.height);
       newLinePosY = 0;
       newElPosX = 0;
+      currentCV.utils.drawRect('#fff','#fff', 0, 0, currentCV.cnv.width, currentCV.cnv.height);
     }
   }
 }

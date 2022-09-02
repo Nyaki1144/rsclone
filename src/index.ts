@@ -4,8 +4,11 @@ import { initSettingBtns } from "./modules/cv-render/settingshandlers";
 import { drawCV } from "./modules/cv-render/drawcv";
 import { currentCVData } from "./modules/cv-render/cvdata";
 import { doc } from "prettier";
+
 import { choosTopic } from "./modules/theme/theme";
 import { translate } from "./modules/language/translate";
+import { initDownloadBtns } from "./modules/cv-render/downloadcv";
+
 
 function init() {
   switch (document.body.dataset.page) {
@@ -25,6 +28,7 @@ function initCVCreatePage() {
   const container = document.querySelector(".canvas-container") as HTMLElement;
   drawCV(currentCVData, container);
   initSettingBtns();
+  initDownloadBtns();
 }
 
 function initCVMainPage() {
