@@ -47,24 +47,32 @@
     <main class="d-flex" style="height: 100vh">
       <div
         class="d-flex flex-column h-100 flex-shrink-0 p-3 text-white bg-dark"
-        style="width: 250px"
+        style="width: 350px"
       >
-        <div class="d-flex">
+        <div class="d-flex justify-content-between align-items-center">
           <a
             href="/"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            class="d-flex align-items-center text-white text-decoration-none"
           >
             <svg class="bi me-2" width="40" height="32">
               <use xlink:href="#cv" />
             </svg>
             <span class="fs-4">Your CV</span>
           </a>
-          <div class="theme" data-icon="sun">
+
+          <div class="d-flex lenguage cursor">
+            <div class="lenguage-item activ-item" data-lang="eng" id="eng">
+              ENG
+            </div>
+            <div class="lenguage-item">/</div>
+            <div class="lenguage-item" data-lang="rus" id="rus">RUS</div>
+          </div>
+          <div class="theme cursor" data-icon="sun">
             <svg class="icon icon-theme">
               <use xlink:href="./assets/icons/sun.svg#sun"></use>
             </svg>
           </div>
-          <div class="theme hidden" data-icon="moon">
+          <div class="theme cursor hidden" data-icon="moon">
             <svg class="icon icon-theme">
               <use xlink:href="./assets/icons/moon.svg#moon"></use>
             </svg>
@@ -74,27 +82,37 @@
         <hr />
         <ul class="nav nav-pills h-100 flex-column mb-auto">
           <li class="nav-item">
-            <a href="./index.html" class="nav-link active" aria-current="page">
+            <a
+              href="./index.html"
+              class="nav-link active d-flex align-items-center"
+              aria-current="page"
+            >
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#home" />
               </svg>
-              Personal Area
+              <div data-i18n="personal-area">Personal Area</div>
             </a>
           </li>
           <li>
-            <a href="./cv-main-page.html" class="nav-link text-white">
+            <a
+              href="./cv-main-page.html"
+              class="nav-link text-white d-flex align-items-center"
+            >
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#person" />
               </svg>
-              Resumes
+              <div data-i18n="resumes">Resumes</div>
             </a>
           </li>
           <li>
-            <a href="./letter-main-page.html" class="nav-link text-white">
+            <a
+              href="./letter-main-page.html"
+              class="nav-link text-white d-flex align-items-center"
+            >
               <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="#letter" />
               </svg>
-              Letter
+              <div data-i18n="letter">Letter</div>
             </a>
           </li>
         </ul>
@@ -120,79 +138,77 @@
       </div>
 
       <div class="d-flex flex-wrap bg-color">
-        <div class="p-5" style="height: 450px">
+        <div class="p-3" style="height: 450px">
           <div class="d-flex flex-column">
-            <h1>Резюме</h1>
+            <h1 data-i18n="resumes">Resume</h1>
 
             <div class="d-flex flex-row">
               <a
                 href="./create.html"
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
-                <div class="bg-danger p-5 h-100 w-220px">создать резюме</div>
+                <div
+                  class="bg-danger p-5 h-310px w-220px"
+                  data-i18n="create-resume"
+                >
+                  Create a resume
+                </div>
               </a>
 
               <div
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
                 <div class="border p-1 h-100 w-220px cv-thumb"></div>
-                <div class="mt-4 h-14">
-                  <div class="">Резюме gfhfu xfhfh</div>
-                  <p class="mt-1 w-full text-sm text-gray-500">
-                    Отредактировано 23 часа назад
-                  </p>
+                <div class="d-flex mt-4 h-14">
+                  <div class="" data-i18n="resumes">Resume</div>
+                  <p>: first resume</p>
                 </div>
               </div>
               <div
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
                 <div class="border p-1 h-100 w-220px cv-thumb"></div>
-                <div class="mt-4 h-14">
-                  <div class="">Резюме gfhfu xfhfh</div>
-                  <p class="mt-1 w-full text-sm text-gray-500">
-                    Отредактировано 23 часа назад
-                  </p>
+                <div class="d-flex mt-4 h-14">
+                  <div class="" data-i18n="resumes">Resume</div>
+                  <p>: second resume</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="d-flex flex-column">
-            <h1>сопроводительное письмо</h1>
+            <h1 data-i18n="letter">Letter</h1>
 
             <div class="d-flex flex-row">
               <a
                 href="./letter.html"
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
-                <div class="bg-danger p-5 h-100 w-220px">
-                  саздать сопроводительное письмо
+                <div
+                  class="bg-danger p-5 h-310px w-220px"
+                  data-i18n="create-letter"
+                >
+                  Create a letter
                 </div>
               </a>
 
               <div
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
-                <div class="bg-primary p-5 h-100 w-220px">
-                  пример сопроводительного письма
-                </div>
+                <div class="bg-primary p-5 h-100 w-220px">letter</div>
                 <div class="mt-4 h-14">
-                  <div class="">Резюме gfhfu xfhfh</div>
-                  <p class="mt-1 w-full text-sm text-gray-500">
-                    Отредактировано 23 часа назад
-                  </p>
+                  <div class="" data-i18n="letter">Letter:</div>
+                  <p>first letter</p>
                 </div>
               </div>
               <div
                 class="d-flex flex-column card-size justify-content-between m-3"
               >
-                <div class="bg-primary p-5 h-100 w-220px">
-                  пример сопроводительного письма
+                <div class="bg-primary p-5 h-100 w-220px" data-i18n="letter">
+                  letter
                 </div>
                 <div class="mt-4 h-14">
-                  <div class="">Резюме gfhfu xfhfh</div>
-                  <p class="mt-1 w-full text-sm text-gray-500">
-                    Отредактировано 23 часа назад
-                  </p>
+                  <div class="" data-i18n="letter">Letter:</div>
+                  <p class="">second letter</p>
                 </div>
               </div>
             </div>

@@ -5,6 +5,7 @@ import { drawCV } from "./modules/cv-render/drawcv";
 import { currentCVData } from "./modules/cv-render/cvdata";
 import { doc } from "prettier";
 import { choosTopic } from "./modules/theme/theme";
+import { translate } from "./modules/language/translate";
 
 function init() {
   switch (document.body.dataset.page) {
@@ -38,3 +39,4 @@ function initIndexPage() {
 
 init();
 choosTopic();
+translate();

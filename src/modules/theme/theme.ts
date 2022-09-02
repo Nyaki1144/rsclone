@@ -40,7 +40,7 @@ export function choosTopic() {
     );
     document.body.style.setProperty(
       "--font-color",
-      `var(--font-color-${data})`
+      `var(--font-colo(r-${data})`
     );
   }
   if (

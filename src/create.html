@@ -22,6 +22,7 @@
             <a
               href="./index.html"
               class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"
+              data-i18n="back"
             >
               BACK
             </a>
@@ -30,26 +31,33 @@
               class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
             >
               <li>
-                <a href="./index.html" class="nav-link text-white">
-                  <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                    <use xlink:href="#speedometer2"></use>
-                  </svg>
+                <a
+                  href="./index.html"
+                  class="nav-link text-white"
+                  data-i18n="dashboard"
+                >
                   Dashboard
                 </a>
               </li>
               <li>
                 <a href="#" class="nav-link text-white">
-                  <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                    <use xlink:href="#grid"></use>
-                  </svg>
-                  RU/ENG
+                  <div class="d-flex lenguage cursor">
+                    <div
+                      class="lenguage-item activ-item"
+                      data-lang="eng"
+                      id="eng"
+                    >
+                      ENG
+                    </div>
+                    <div class="lenguage-item">/</div>
+                    <div class="lenguage-item" data-lang="rus" id="rus">
+                      RUS
+                    </div>
+                  </div>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
-                  <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                    <use xlink:href="#people-circle"></use>
-                  </svg>
+                <a href="#" class="nav-link text-white" data-i18n="save">
                   Save
                 </a>
               </li>
@@ -63,12 +71,14 @@
       <div class="row w-100"></div>
       <div class="row w-100">
         <div class="col container border vh-100 m-1">
-          <h2>Left part here</h2>
           <div class="blockLeft">
             <form action="" role="form">
               <div>
-                <label for="formFileLg" class="form-label"
-                  >Загрузите свою фотографию</label
+                <label
+                  for="formFileLg"
+                  class="form-label"
+                  data-i18n="upload-your-resume"
+                  >Upload your resume</label
                 >
                 <input
                   class="form-control form-control-lg"
@@ -78,73 +88,55 @@
               </div>
 
               <div class="form-group">
-                <label for="Name">Имя</label>
-                <input
-                  type="name"
-                  name=""
-                  id="name"
-                  class="form-control"
-                  placeholder="Введите имя"
-                />
+                <label for="Name" data-i18n="name">Name</label>
+                <input type="name" name="" id="name" class="form-control" />
               </div>
 
               <div class="form-group">
-                <label for="Name">Фамилия</label>
-                <input
-                  type="name"
-                  name=""
-                  id="lastname"
-                  class="form-control"
-                  placeholder="Введите фамилию"
-                />
+                <label for="Name" data-i18n="lastname">Lastname</label>
+                <input type="name" name="" id="lastname" class="form-control" />
               </div>
 
               <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  name=""
-                  id="email"
-                  class="form-control"
-                  placeholder="Введите email"
-                />
+                <label for="email" data-i18n="email">Email</label>
+                <input type="email" name="" id="email" class="form-control" />
               </div>
 
               <div class="form-group">
-                <label for="text">Телефон</label>
+                <label for="text" data-i18n="tel">Телефон</label>
                 <input
                   type="text"
                   name=""
                   id="numberPhone"
                   class="form-control"
-                  placeholder="Введите номер телефона"
                 />
               </div>
 
               <div class="form-group">
-                <label for="text">Адрес</label>
-                <input
-                  type="text"
-                  name=""
-                  id="address"
-                  class="form-control"
-                  placeholder="Введите адрес"
-                />
+                <label for="text" data-i18n="address">Адрес</label>
+                <input type="text" name="" id="address" class="form-control" />
               </div>
 
               <div class="form-group">
-                <label for="text">О себе </label>
+                <label
+                  for="text"
+                  data-i18n="About-me
+                "
+                  >About me
+                </label>
                 <input
                   type="text"
                   name=""
                   id="information"
                   class="form-control"
-                  placeholder="Введите текст о себе"
                 />
               </div>
               <div>
-                <label for="customRange2" class="form-label"
-                  >Уровень знания Английского языка от 1 до 5</label
+                <label
+                  for="customRange2"
+                  class="form-label"
+                  data-i18n="lenguage-level-1"
+                  >English language proficiency level from 1 to 5</label
                 >
                 <input
                   type="range"
@@ -168,8 +160,11 @@
               </div>
 
               <div>
-                <label for="customRange2" class="form-label"
-                  >Уровень знания Русского языка от 1 до 5</label
+                <label
+                  for="customRange2"
+                  class="form-label"
+                  data-i18n="lenguage-level-2"
+                  >Russian language proficiency level from 1 to 5</label
                 >
                 <input
                   type="range"
@@ -193,8 +188,11 @@
               </div>
 
               <div>
-                <label for="customRange2" class="form-label"
-                  >Уровень знания HTML от 1 до 5</label
+                <label
+                  for="customRange2"
+                  class="form-label"
+                  data-i18n="lenguage-level-3"
+                  >HTML knowledge level from 1 to 5</label
                 >
                 <input
                   type="range"
@@ -218,8 +216,11 @@
               </div>
 
               <div>
-                <label for="customRange2" class="form-label"
-                  >Уровень знания JavaScript от 1 до 5</label
+                <label
+                  for="customRange2"
+                  class="form-label"
+                  data-i18n="lenguage-level-4"
+                  >JavaScript knowledge level from 1 to 5</label
                 >
                 <input
                   type="range"
@@ -242,9 +243,13 @@
                 </div>
 
                 <div></div>
-                <p>Нажмите, что бы создать резюме</p>
-                <button type="button" class="btn btn-outline-primary">
-                  Отправить
+                <p data-i18n="create-resume">Click to create resume</p>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  data-i18n="send"
+                >
+                  Send
                 </button>
               </div>
             </form>
@@ -265,6 +270,7 @@
                   class="btn btn-secondary dropdown-toggle select-size"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  data-i18n="template"
                 >
                   Template
                 </button>
@@ -283,6 +289,7 @@
                   class="btn btn-secondary dropdown-toggle select-font"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  data-i18n="font"
                 >
                   Font
                 </button>
@@ -323,6 +330,7 @@
                   class="btn btn-secondary dropdown-toggle select-color"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  data-i18n="color"
                 >
                   Color
                 </button>
@@ -368,6 +376,7 @@
                   class="btn btn-secondary dropdown-toggle select-size"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  data-i18n="size"
                 >
                   Size
                 </button>
