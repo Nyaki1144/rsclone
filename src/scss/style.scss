@@ -1,3 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./cvrender";
 @import "./home";
+@import "./theme";
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.padding-0 {
+  padding: 0;
+}
