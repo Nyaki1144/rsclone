@@ -91,6 +91,10 @@ const baseConfig = {
       template: path.resolve(__dirname, "./src/letter-main-page.html"),
       filename: "letter-main-page.html",
     }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./src/letter.html"),
+      filename: "letter.html",
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "style.css",

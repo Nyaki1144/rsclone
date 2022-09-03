@@ -7,7 +7,27 @@ export async function getCvData(){
 }
 */
 
-export let currentCVData = {
+type dataCV = {
+  [key: string]: any; 
+}
+
+export let currentLetterData: dataCV = {
+  "id": 0,
+  "preferences": {
+    "template": 1,
+    "font": "default",
+    "fontsize": "default",
+    "color": "default"
+  },
+  "firstname": "Jon",
+  "lastname": "Snow",
+  "email": "winterfell@gmail.com",
+  "tel": "+123-456-7890",
+  "title": "letter theme",
+  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \nLorem Ipsum has been the industry's standard dummy text ever since the 1500s, \nwhen an unknown printer took a galley of type and scrambled it to make a \ntype specimen book. It has survived not only five centuries, but also \nthe leap into electronic typesetting, remaining essentially unchanged. \nIt was popularised in the 1960s with the release of Letraset sheets containing \nLorem Ipsum passages, and more recently with desktop publishing software \nlike Aldus PageMaker including versions of Lorem Ipsum.",
+}
+
+export let currentCVData: dataCV = {
     "cvId": 0,
     "preferences": {
       "template": 0,
@@ -20,7 +40,7 @@ export let currentCVData = {
     "email": "winterfell@gmail.com",
     "tel": "+123-456-7890",
     "address": "near the wall",
-    "about": "Jon Snow is introduced as the 14-year-old illegitimate son of Eddard Ned Stark, Lord of Winterfell",
+    "about": "Jon Snow is introduced as the 14-year-old illegitimate \nson of Eddard Ned Stark, Lord of Winterfell",
     "subtitle": "king of the north",
     "education": [
       {
@@ -47,7 +67,7 @@ export let currentCVData = {
         "location": "Westeros",
         "begin": "Aug 2015",
         "end": "Present",
-        "description": "some job responsibilities here"
+        "description": "some job responsibilities here \ncan be several lines"
       },
       {
         "position": "Wall defender",
