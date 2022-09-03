@@ -4,6 +4,9 @@ import { initSettingBtns } from "./modules/cv-render/settingshandlers";
 import { drawCV, drawLetter } from "./modules/cv-render/drawcv";
 import { currentCVData, currentLetterData } from "./modules/cv-render/cvdata";
 import { doc } from "prettier";
+
+import { choosTopic } from "./modules/theme/theme";
+import { translate } from "./modules/language/translate";
 import { initDownloadBtns } from "./modules/cv-render/downloadcv";
 
 function init(){
@@ -12,7 +15,7 @@ function init(){
     case 'cv-main':
       initCVMainPage();
       break;
-    case 'cv-create':
+    case "cv-create":
       initCVCreatePage();
       break;
     case 'letter-create':
@@ -27,15 +30,15 @@ function init(){
   }
 }
 
-function initCVCreatePage(){
-  const container = document.querySelector('.canvas-container') as HTMLElement;
+function initCVCreatePage() {
+  const container = document.querySelector(".canvas-container") as HTMLElement;
   drawCV(currentCVData, container);
   initSettingBtns();
   initDownloadBtns();
 }
 
-function initCVMainPage(){
-  const cvThumbs = document.querySelectorAll('.cv-thumb');
+function initCVMainPage() {
+  const cvThumbs = document.querySelectorAll(".cv-thumb");
   cvThumbs.forEach((el) => drawCV(currentCVData, el as HTMLElement));
 }
 
@@ -59,3 +62,6 @@ function initLetterCreatePage(){
 };
 
 init();
+choosTopic();
+translate();
+
