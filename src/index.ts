@@ -10,7 +10,6 @@ import { translate } from "./modules/language/translate";
 import { initDownloadBtns } from "./modules/cv-render/downloadcv";
 
 function init(){
-  console.log(document.body.dataset.page);
   switch(document.body.dataset.page){
     case 'cv-main':
       initCVMainPage();

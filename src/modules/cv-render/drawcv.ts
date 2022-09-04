@@ -9,6 +9,8 @@ let padding = 15 * ratio;
 
 let currentCV: Record<string, any>;
 const monthEng = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthRus = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 
+]
 
 export function drawCV(data: Record<string, any>, container: HTMLElement) {
   if (!data) data = {};
@@ -145,16 +147,31 @@ function drawAbout(text: string) {
     x = padding;
     y = newLinePosY + padding / 2;
   }
-  drawSeveralLines(currentCV.settings.textsize, currentCV.settings.subtitlefont, currentCV.settings.subtitlecolor, text, x, y);
+  const maxwidth = currentCV.cnv.width - 150 * ratio - padding * 3;
+  drawSeveralLines(currentCV.settings.textsize, currentCV.settings.subtitlefont, currentCV.settings.subtitlecolor, text, x, y, maxwidth);
 }
 
-function drawSeveralLines(size: number, font: string, color: string, text: string, x: number, y: number){
-  const lines = text.split('\n');
-  lines.forEach((line) => {
-    currentCV.utils.drawText(size, font, color, line, x, y);
-    nextLine(currentCV.settings.textsize);
-    y += padding;
-  })
+function drawSeveralLines(size: number, font: string, color: string, text: string, x: number, y: number, maxwidth = 0){
+  currentCV.utils.drawText(size, font, color, '', x, y);
+  let curString = '';
+  let length = 0;
+  const words = text.split(' ');
+  for(let i = 0; i < words.length; i++){
+    curString += words[i] + ' ';
+    length = currentCV.ctx.measureText(curString).width;
+    if(length >= maxwidth){
+      curString = curString.trim().slice(0, (curString.trim().lastIndexOf(' ')));
+      currentCV.utils.drawText(size, font, color, curString, x, y);
+      i--;
+      y += padding;
+      curString = '';
+      length = 0;
+      continue;
+    }
+    currentCV.utils.drawText(size, font, color, curString, x, y);
+  }
+  newLinePosY = y;
+  nextLine(currentCV.settings.textsize);
 }
 
 function drawHeaderContacts(align:string = 'column', email: string, phone: string, location: string){
@@ -185,8 +202,9 @@ function drawHeaderContacts(align:string = 'column', email: string, phone: strin
 function drawCVBody(cv: Record<string, any>) {
   newElPosX = currentCV.settings.sidebar === 'left' ? currentCV.cnv.width * 1 / 3 : padding;
   newLinePosY = 150 * ratio + (padding * 3);
+  const lang = localStorage.getItem('lang');
   if(cv.education){
-    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.textfont, currentCV.settings.headercolor, 'Education', newElPosX, newLinePosY);
+    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.textfont, currentCV.settings.headercolor, lang === 'eng'?' Education': 'Образование', newElPosX, newLinePosY);
     newLinePosY += currentCV.settings.headersize + padding;
     const educationData = cv.education;
     for(const entry of educationData){
@@ -200,7 +218,7 @@ function drawCVBody(cv: Record<string, any>) {
     drawHorizontalSeparator (currentCV.settings.sidebar === 'left'? newElPosX : padding, newLinePosY + 0.5, 340);
   }
   if(cv.employment){
-    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Work', newElPosX, newLinePosY);
+    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, lang === 'eng'? 'Work': 'Работа', newElPosX, newLinePosY);
     newLinePosY += currentCV.settings.headersize + padding;
     const employmentData = cv.employment;
     for(const entry of employmentData){
@@ -216,7 +234,8 @@ function drawCVBody(cv: Record<string, any>) {
 function drawLetterBody(letter: Record<string, any>){
   newElPosX = padding;
   const now = new Date();
-  const dateLine = `${now.getDay()} ${monthEng[now.getMonth()]} ${now.getFullYear()}`;
+  const lang = localStorage.getItem('Lang');
+  const dateLine = `${now.getDate()} ${lang === 'Eng'? monthEng[now.getMonth()] : monthRus[now.getMonth()]} ${now.getFullYear()}`;
   currentCV.utils.drawText(currentCV.settings.subtitlesize, currentCV.settings.textfont, 'darkgrey', dateLine, newElPosX, newLinePosY);
   nextLine(currentCV.settings.subtitlesize);
   if(letter.title){
@@ -224,7 +243,8 @@ function drawLetterBody(letter: Record<string, any>){
     nextLine(currentCV.settings.subtitlesize);
   }
   if(letter.content){
-    drawSeveralLines(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, letter.content, newElPosX, newLinePosY);
+    const maxwidth = currentCV.cnv.width - padding * 2;
+    drawSeveralLines(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, letter.content, newElPosX, newLinePosY, maxwidth);
   }
 }
 
@@ -236,24 +256,24 @@ function drawBodySection(dates: string, title: string, location: string, descrip
   newElPosX = currentCV.settings.sidebar === 'left' ? currentCV.cnv.width * 1 / 3 : padding;
   currentCV.utils.drawText(currentCV.settings.textsize, currentCV.settings.textfont, 'grey', location, newElPosX, newLinePosY);
   nextLine(currentCV.settings.textsize);
-  drawSeveralLines(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, description, newElPosX, newLinePosY);
-  nextLine(currentCV.settings.textsize);
-  nextLine(currentCV.settings.textsize);
+  const maxwidth = currentCV.cnv.width * 2 / 3 - padding * 2;
+  drawSeveralLines(currentCV.settings.textsize, currentCV.settings.textfont, currentCV.settings.textcolor, description, newElPosX, newLinePosY, maxwidth);
 }
 
 function drawCVSidebar(cv: Record<string, any>) {
   newElPosX = currentCV.settings.sidebar === 'left' ? padding : currentCV.cnv.width * 2 / 3 + padding;
   newLinePosY = 150 * ratio + padding * 3;
+  const lang = localStorage.getItem('lang');
   if(currentCV.settings.template === 0 || currentCV.settings.template === 1){
     if(cv.email || cv.tel || cv.address){
-      currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Contacts', newElPosX, newLinePosY);
+      currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, lang === 'eng'? 'Contacts': 'Контакты', newElPosX, newLinePosY);
       nextLine(currentCV.settings.headersize);
       drawHeaderContacts('column', cv.email, cv.tel, cv.address);
       newLinePosY += padding;
     }
   }
   if(cv.skills){
-    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Skills', newElPosX, newLinePosY);
+    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, lang === 'eng'? 'Skills': 'Навыки', newElPosX, newLinePosY);
     nextLine(currentCV.settings.headersize);
     const skills = cv.skills;
     for(const entry of skills){
@@ -262,7 +282,7 @@ function drawCVSidebar(cv: Record<string, any>) {
     newLinePosY += padding;
   }
   if(cv.languages){
-    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, 'Languages', newElPosX, newLinePosY);
+    currentCV.utils.drawText(currentCV.settings.headersize, currentCV.settings.headerfont, currentCV.settings.headercolor, lang === 'eng'? 'Languages': 'Языки', newElPosX, newLinePosY);
     nextLine(currentCV.settings.headersize);
     const languages = cv.languages;
     for(const entry of languages){

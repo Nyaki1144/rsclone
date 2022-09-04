@@ -31,7 +31,6 @@ function setSetting(e: Event): void {
   }
   if ((e.target as HTMLElement).dataset.cvSize) {
     currentCVData.preferences.fontsize = (e.target as HTMLElement).dataset.cvSize || 'default';
-    resetSettings();
   }
   document.body.dataset.page === 'cv-create' ? refreshCV() : refreshLetter();
 }
