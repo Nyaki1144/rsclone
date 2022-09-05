@@ -5,9 +5,13 @@ export function translate() {
 
   const i18Obj = {
     en: {
+      "fill-letter": "fill out your letter",
+
+      "letter-topick": "Cover Letter Subject",
       "personal-area": "Personal Area",
       resumes: "Resumes",
       letter: "Letter",
+      "letter-title": "Letter",
       "create-resume": "Create a resume",
       "create-letter": "Create a letter",
       "upload-your-resume": "Upload your resume",
@@ -29,12 +33,16 @@ export function translate() {
       template: "template",
       font: "Font",
       color: "Color",
-      size: "Размер",
+      size: "Size",
+      push: "Click to create a letter",
     },
     ru: {
+      "fill-letter": "заполнить письмо",
+      "letter-topick": "Тема сопроводительного письма",
       "personal-area": "Личный кабинет",
       resumes: "Резюме",
       letter: "Сопроводительное письмо",
+      "letter-title": "Сп. письмо",
       "create-resume": "Создать резюме",
       "create-letter": "Создать сопроводительное письмо",
       "upload-your-resume": "Загрузите свою фотографию",
@@ -56,7 +64,8 @@ export function translate() {
       template: "Шаблон",
       font: "Шрифт",
       color: "цвет",
-      size: "Size",
+      size: "Размер",
+      push: "Нажмите, чтобы создать письмо",
     },
   };
 
