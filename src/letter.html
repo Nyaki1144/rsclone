@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <title>create</title>
+  </head>
+  <body data-page="letter-create" class="bg-color text-color">
+    <header>
+      <div class="px-3 py-2 text-bg-dark">
+        <div class="container">
+          <div
+            class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+          >
+            <a
+              href="./index.html"
+              class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"
+            >
+              BACK
+            </a>
+
+            <ul
+              class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+            >
+              <li>
+                <a href="./index.html" class="nav-link text-white">
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <div class="d-flex lenguage cursor">
+                  <div
+                    class="lenguage-item activ-item"
+                    data-lang="eng"
+                    id="eng"
+                  >
+                    ENG
+                  </div>
+                  <div class="lenguage-item">/</div>
+                  <div class="lenguage-item" data-lang="rus" id="rus">RUS</div>
+                </div>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white"> Save </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row w-100 d-flex">
+        <div class="col container border w-50 vh-100 m-1">
+          <div class="blockLeft">
+            <form action="" role="form">
+              <div class="form-group">
+                <label data-i18n="letter-topick" for="text"
+                  >Cover Letter Subject</label
+                >
+                <input
+                  type="text"
+                  name=""
+                  id="title-Letter"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="fill-letter" for="text">
+                  fill out your letter</label
+                >
+                <input
+                  type="text"
+                  name=""
+                  id="text-letter"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="name" for="Name">Name</label>
+                <input type="name" name="" id="name" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="lastname" for="Name">Lastname</label>
+                <input type="name" name="" id="lastname" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="email" for="email">Email</label>
+                <input type="email" name="" id="email" class="form-control" />
+
+                <div class="form-group">
+                  <label data-i18n="tel" for="text">Phone number</label>
+                  <input
+                    type="text"
+                    name=""
+                    id="numberPhone"
+                    class="form-control"
+                    placeholder="Введите номер телефона"
+                  />
+                </div>
+
+                <p data-i18n="push">Click to create a letter</p>
+                <button
+                  data-i18n="send"
+                  type="button"
+                  class="btn btn-outline-primary"
+                >
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col container border w-50 vh-100 m-1">
+          <div class="row justify-content-center">
+            <div class="col col-md-8 canvas-container"></div>
+          </div>
+          <div class="row border p-2">
+            <div class="col d-grid gap-2 d-md-flex justify-content-md-center">
+              <div class="btn-group dropup">
+                <button
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle select-size"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Template
+                </button>
+                <ul class="dropdown-menu">
+                  <div class="container d-flex justify-content-around">
+                    <div class="template-thumb" data-cv-template="0"></div>
+                    <div class="template-thumb" data-cv-template="1"></div>
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div class="col d-grid gap-2 d-md-flex justify-content-md-center">
+              <div class="btn-group dropup">
+                <button
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle select-font"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Font
+                </button>
+                <ul class="dropdown-menu">
+                  <li
+                    class="dropdown-item"
+                    style="font-family: Arial"
+                    data-cv-font="Arial"
+                  >
+                    Arial
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    style="font-family: Times New Roman"
+                    data-cv-font="Times New Roman"
+                  >
+                    Times New Roman
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    style="font-family: Garamond"
+                    data-cv-font="Garamond"
+                  >
+                    Garamond
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    style="font-family: Verdana"
+                    data-cv-font="Verdana"
+                  >
+                    Verdana
+                  </li>
+                </ul>
+              </div>
+              <div class="btn-group dropup">
+                <button
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle select-color"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Color
+                </button>
+                <div class="dropdown-menu">
+                  <div class="container d-flex justify-content-around">
+                    <div
+                      class="color-option color-1"
+                      data-cv-color="#2f71a1"
+                    ></div>
+                    <div
+                      class="color-option color-2"
+                      data-cv-color="#6fab8a"
+                    ></div>
+                    <div
+                      class="color-option color-3"
+                      data-cv-color="#303745"
+                    ></div>
+                    <div
+                      class="color-option color-4"
+                      data-cv-color="#828282"
+                    ></div>
+                    <div
+                      class="color-option color-5"
+                      data-cv-color="#b59c94"
+                    ></div>
+                    <input
+                      class="colorpicker"
+                      type="color"
+                      name="colorpicker"
+                      id="colorpicker"
+                    />
+                  </div>
+                  <div class="container">
+                    <span class="selected-color" data-selected-color
+                      >#2f71a1</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="btn-group dropup">
+                <button
+                  type="button"
+                  class="btn btn-secondary dropdown-toggle select-size"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Size
+                </button>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item" data-cv-size="s">S</li>
+                  <li class="dropdown-item" data-cv-size="m">M</li>
+                  <li class="dropdown-item" data-cv-size="l">L</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

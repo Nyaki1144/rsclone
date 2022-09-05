@@ -1,0 +1,11 @@
+.blockLeft {
+  width: 50%;
+}
+
+.blockRight {
+  width: 50%;
+}
+
+.create-card {
+  border: 2px solid #e70303;
+}
